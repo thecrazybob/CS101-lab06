@@ -1,8 +1,5 @@
 import java.util.Scanner;
 
-// Part 4 needs to be fixed, Part 6 is missing
-// Planning to do it by end of the day (29th November 2020)
-
 /**
  * Lab06 
  * Instructions for Lab06 are in INSTRUCTIONS.md file located in the root directory of Lab06
@@ -47,7 +44,7 @@ public class Lab06 {
         System.out.println("Result of 'factorial' method: " + factorial(7));
         System.out.println("Result of 'reverse' method: " + reverse("abcd"));
         System.out.println("Result of 'toDecimal' method: " + toDecimal("1011"));
-        System.out.println("Result of 'decimalToBinary' method: " + decimalToBinary(1011));
+        System.out.println("Result of 'decimalToBinary' method: " + decimalToBinary(11));
 
         // 1. print a table with columns n, n-squared, n-cubed & n to the power 4, for values of n from -1 to 10 inclusive
         
@@ -154,6 +151,47 @@ public class Lab06 {
         System.out.println("Result of Math.sin() for the given value: " + Math.sin(x_for_calculating_sin));
         System.out.println("Deviation of sum from Math.sin() value: " + (Math.sin(1.5708) - sum));
 
+
+        /*
+        6.
+        obviously computing sin(x) like this results in significant errors and is very inefficient!
+        A better approach is to compute each term from the previous one (hint: think how can you compute x^5/5! from x^3/3! ).
+        Implement sin(x) as a method using this approach and test it by comparing its answers with those from Math.sin(x).
+        */
+
+        System.out.println();
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 6:");
+
+        System.out.println(SEPARATOR);
+
+        sum = 0;
+
+        calculated_term = 0;
+
+        for (int n = 0; n <= 10; n++) {
+
+            minus_1_power_n = power((-1), n);
+            x_power_2n_plus_1 = power(x_for_calculating_sin, (2*n)+1);
+            factorial_2n_plus_1 = factorial((2*n)+1);
+
+            if (n == 0) {
+                sum += x_for_calculating_sin;
+            }
+            else if (n == 1) {
+                calculated_term = (minus_1_power_n/factorial_2n_plus_1) * (x_power_2n_plus_1);
+                sum += calculated_term;
+            }
+            else {
+                calculated_term = (((minus_1_power_n) * calculated_term) / ((2*n) + 1) * (2*n));
+                sum += calculated_term;
+            }
+
+            System.out.println("n : " + n + " | " + "sum: " + sum + " | " + "calculated term: " + calculated_term);
+
+        }
+
         // close scanner instance
         scan.close();
 
@@ -250,27 +288,11 @@ public class Lab06 {
     {
 
         // variables
-        int i;
-        int decimal;
-        int remainder;
         int binary;
 
-        // initializing variables
-        i = 0;
-        decimal = 0;
+        binary = Integer.parseInt(base2, 2);
 
-        binary = Integer.parseInt(base2);
-
-        // compute the decimal value from base2 String
-        while (binary != 0) 
-        {
-            remainder = binary % 10;
-            decimal = decimal + remainder * i;
-            i = i * 2;
-            binary = binary / 10;
-        }
-
-        return decimal;
+        return binary;
 
     }
 

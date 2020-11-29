@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Lab06 
  * Instructions for Lab06 are in INSTRUCTIONS.md file located in the root directory of Lab06
@@ -12,8 +14,24 @@
 public class Lab06 {
     public static void main(String[] args) throws Exception {
 
+        Scanner scan = new Scanner(System.in);
+
+        // constants
+        final String SEPARATOR = "----------";
+
+        // variables
+        String first_binary_string;
+        String second_binary_string;
+        int first_decimal_int;
+        int second_decimal_int;
+        String text_to_be_reversed;
+
+        System.out.println(SEPARATOR);
+
         System.out.println("Raw output of methods:");
-        System.out.println("-----");
+
+        System.out.println(SEPARATOR);
+
         System.out.println("Result of 'power' method: " + power(2,4));
         System.out.println("Result of 'factorial' method: " + factorial(7));
         System.out.println("Result of 'reverse' method: " + reverse("abcd"));
@@ -21,10 +39,82 @@ public class Lab06 {
         System.out.println("Result of 'decimalToBinary' method: " + decimalToBinary(1011));
 
         // 1. print a table with columns n, n-squared, n-cubed & n to the power 4, for values of n from -1 to 10 inclusive
-        for (int i = -1; i == 10; i++) {
-            System.out.println("n: " + i);
+        
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 1: ");
+
+        System.out.println(SEPARATOR);
+        
+        for (int i = -1; i <= 10; i++) {
+            System.out.println("n: " + i + " | " + "n-squared: " + power(i, 2) + " | " + "n-cubed: " + power(i, 3));
         }
         
+        // 2. print a table of n and n-factorial, for values of n from 1 to 15
+        
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 2: ");
+
+        System.out.println(SEPARATOR);
+        
+        for (int i = 1; i <= 15; i++) {
+            System.out.println("n: " + i + " | " + "n-factorial: " + factorial(i));
+        }
+        
+        // 3. read two binary (base-2) Strings from the user, convert them to decimal,
+        // then add them together and print the result in binary form.
+        
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 3: ");
+
+        System.out.println(SEPARATOR);
+
+        System.out.println("Please input the first binary string: ");
+        first_binary_string = scan.nextLine();
+        
+        System.out.println("Please input the second binary string: ");
+        second_binary_string = scan.nextLine();
+
+        first_decimal_int = toDecimal(first_binary_string);
+        second_decimal_int = toDecimal(second_binary_string);
+
+        System.out.println(decimalToBinary(first_decimal_int + second_decimal_int));
+        
+        /*
+        4.
+        read a line of text from the user and output it again,
+        but with each word reversed.
+        For instance, were the user to enter "gnimmargorP si nuf",
+        your program should output "Programming is fun".
+        */
+        
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 4:");
+
+        System.out.println(SEPARATOR);
+
+        System.out.println("Please input the text to be reversed:");
+        text_to_be_reversed = scan.nextLine();
+
+        System.out.println(reverse(text_to_be_reversed));
+
+        /*
+        5.
+        print a table that shows the "raw" calculations for the Taylor series expansion of sin(x),
+        where x is read from the user. Your table should have columns for the term number n,
+        and for (-1)^n, x^(2n+1), (2n+1)!, the term itself computed from these values, and the sum
+        of the preceding terms with this one, i.e. the current approximation to sin(x).
+        The term number n should go from 0 up to, say, 10.
+        */
+        
+        System.out.println(SEPARATOR);
+
+        System.out.println("Now printing out demonstration 5:");
+
+        System.out.println(SEPARATOR);
     }
 
     /**

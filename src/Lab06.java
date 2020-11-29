@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+// Part 4 needs to be fixed, Part 6 is missing
+// Planning to do it by end of the day (29th November 2020)
+
 /**
  * Lab06 
  * Instructions for Lab06 are in INSTRUCTIONS.md file located in the root directory of Lab06
@@ -24,7 +27,15 @@ public class Lab06 {
         String second_binary_string;
         int first_decimal_int;
         int second_decimal_int;
+
         String text_to_be_reversed;
+
+        double x_for_calculating_sin;
+        double minus_1_power_n;
+        double x_power_2n_plus_1;
+        double factorial_2n_plus_1;
+        double calculated_term;
+        double sum;
 
         System.out.println(SEPARATOR);
 
@@ -47,7 +58,7 @@ public class Lab06 {
         System.out.println(SEPARATOR);
         
         for (int i = -1; i <= 10; i++) {
-            System.out.println("n: " + i + " | " + "n-squared: " + power(i, 2) + " | " + "n-cubed: " + power(i, 3));
+            System.out.println("n: " + i + " | " + "n-squared: " + power(i, 2) + " | " + "n-cubed: " + power(i, 3) + " | " + "n-power-four: " + power(i, 4));
         }
         
         // 2. print a table of n and n-factorial, for values of n from 1 to 15
@@ -78,8 +89,12 @@ public class Lab06 {
         second_binary_string = scan.nextLine();
 
         first_decimal_int = toDecimal(first_binary_string);
+        System.out.println("first_decimal_int: " + first_decimal_int);
+        
         second_decimal_int = toDecimal(second_binary_string);
+        System.out.println("second_decimal_int: " + second_decimal_int);
 
+        System.out.println("first_decimal_int + second_decimal_int: " + (first_decimal_int + second_decimal_int));
         System.out.println(decimalToBinary(first_decimal_int + second_decimal_int));
         
         /*
@@ -99,7 +114,11 @@ public class Lab06 {
         System.out.println("Please input the text to be reversed:");
         text_to_be_reversed = scan.nextLine();
 
-        System.out.println(reverse(text_to_be_reversed));
+        String[] words = text_to_be_reversed.split("\\s+");
+
+        for (int i = 0; i < words.length; i++) {
+            System.out.print(reverse(words[i]) + " ");
+        }
 
         /*
         5.
@@ -110,11 +129,34 @@ public class Lab06 {
         The term number n should go from 0 up to, say, 10.
         */
         
+        System.out.println();
         System.out.println(SEPARATOR);
 
         System.out.println("Now printing out demonstration 5:");
 
         System.out.println(SEPARATOR);
+
+        System.out.println("Please input the term 'x' for which sin(x) needs to be calculated:");
+        x_for_calculating_sin = scan.nextDouble();
+
+        sum = 0;
+        for (int n = 0; n <= 10; n++){
+            
+            minus_1_power_n = power((-1), n);
+            x_power_2n_plus_1 = power(x_for_calculating_sin, (2*n)+1);
+            factorial_2n_plus_1 = factorial((2*n)+1);
+            calculated_term = (minus_1_power_n/factorial_2n_plus_1) * (x_power_2n_plus_1);
+            sum += calculated_term;
+
+            System.out.println("n: " + n + " | " + "(-1)^n: " + minus_1_power_n + " | " + "x^(2n+1): " + x_power_2n_plus_1 + " | " + "(2n+1)!: " + factorial_2n_plus_1 + " | " + "term: " + calculated_term + " | " + "sum: " + sum);
+        }
+
+        System.out.println("Result of Math.sin() for the given value: " + Math.sin(x_for_calculating_sin));
+        System.out.println("Deviation of sum from Math.sin() value: " + (Math.sin(1.5708) - sum));
+
+        // close scanner instance
+        scan.close();
+
     }
 
     /**
@@ -140,6 +182,11 @@ public class Lab06 {
         }
 
         // return result
+
+        if (y == 0) {
+            result = 1.0;
+        }
+
         return result;
 
     }
@@ -205,21 +252,22 @@ public class Lab06 {
         // variables
         int i;
         int decimal;
+        int remainder;
+        int binary;
 
         // initializing variables
         i = 0;
         decimal = 0;
 
+        binary = Integer.parseInt(base2);
+
         // compute the decimal value from base2 String
-        for (i = base2.length() - 1 ; i >= 0 ; i--)
+        while (binary != 0) 
         {
-
-            if (base2.charAt(i) == '1') {
-
-                decimal += power(2, base2.length() - 1 - i);
-
-            }
-
+            remainder = binary % 10;
+            decimal = decimal + remainder * i;
+            i = i * 2;
+            binary = binary / 10;
         }
 
         return decimal;
